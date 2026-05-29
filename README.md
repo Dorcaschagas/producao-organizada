@@ -1,3 +1,5 @@
+[![Preview do site](img/Captura.png)](https://sitedc.online/producao-organizada)
+
 # 🏭 Produção Organizada — Gestão de Produção e Estoque
 
 > Sistema desktop Windows para controle de produção, estoque e pedidos. Desenvolvido para pequenas e médias empresas de confecção, peças mecânicas, alimentos e outros segmentos.
