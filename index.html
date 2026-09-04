@@ -86,8 +86,11 @@
     .hero {
       background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 50%, #388E3C 100%);
       color: var(--branco);
-      padding: 100px 5% 80px;
-      text-align: center;
+      padding: 80px 5%;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 48px;
+      align-items: center;
     }
 
     .hero-badge {
@@ -104,11 +107,10 @@
     }
 
     .hero h1 {
-      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-size: clamp(2rem, 4vw, 3.2rem);
       font-weight: 800;
       line-height: 1.15;
-      max-width: 750px;
-      margin: 0 auto 20px;
+      margin-bottom: 20px;
       letter-spacing: -1px;
     }
 
@@ -119,16 +121,82 @@
 
     .hero p {
       font-size: 1.1rem;
-      max-width: 560px;
-      margin: 0 auto 40px;
+      max-width: 480px;
+      margin-bottom: 36px;
       opacity: 0.85;
     }
 
     .hero-cta {
       display: flex;
       gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .hero-mockup {
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+
+    .hero-mockup-stage {
+      position: relative;
+      max-width: 460px;
+      width: 100%;
+      transform: rotate(1.5deg);
+      transition: transform 0.3s;
+    }
+
+    .hero-mockup-stage:hover { transform: rotate(0deg); }
+
+    .hero-slide {
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      transition: opacity 0.6s ease;
+      pointer-events: none;
+    }
+
+    .hero-slide.ativo {
+      opacity: 1;
+      position: relative;
+      pointer-events: auto;
+    }
+
+    .hero-dots {
+      display: flex;
       justify-content: center;
       flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 18px;
+      max-width: 280px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-dots span {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.35);
+      transition: background 0.3s, transform 0.3s;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .hero-dots span.ativo { background: var(--branco); transform: scale(1.4); }
+
+    @media (max-width: 860px) {
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding-top: 56px;
+      }
+      .hero p { margin-left: auto; margin-right: auto; }
+      .hero-cta { justify-content: center; }
+      .hero-mockup { order: -1; }
+      .hero-mockup-stage { max-width: 340px; transform: none; }
     }
 
     .btn-primario {
@@ -211,21 +279,101 @@
       margin-bottom: 48px;
     }
 
+    /* SCREENSHOTS */
+    #screenshots { background: var(--branco); }
+
+    .screenshots-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+
+    .screenshot-card {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .screenshot-card.destaque {
+      grid-column: span 2;
+    }
+
+    .screenshot-frame {
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.14);
+      border: 1px solid var(--borda);
+      background: var(--branco);
+    }
+
+    .screenshot-frame-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 14px;
+      background: #EDEDED;
+      border-bottom: 1px solid var(--borda);
+    }
+
+    .screenshot-frame-bar span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .screenshot-frame-bar span:nth-child(1) { background: #FF5F57; }
+    .screenshot-frame-bar span:nth-child(2) { background: #FEBC2E; }
+    .screenshot-frame-bar span:nth-child(3) { background: #28C840; }
+
+    .screenshot-frame img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .screenshot-caption h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .screenshot-caption p {
+      font-size: 0.88rem;
+      color: var(--texto-suave);
+    }
+
+    @media (max-width: 780px) {
+      .screenshots-grid { grid-template-columns: 1fr; }
+      .screenshot-card.destaque { grid-column: span 1; }
+    }
+
     /* FUNCIONALIDADES */
     #funcionalidades { background: var(--branco); }
 
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 24px;
+    .carrossel-wrap {
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 40px, #000 calc(100% - 40px), transparent 100%);
+      mask-image: linear-gradient(90deg, transparent 0, #000 40px, #000 calc(100% - 40px), transparent 100%);
     }
+
+    .features-grid {
+      display: flex;
+      gap: 24px;
+      width: max-content;
+      animation: rolar-esteira 60s linear infinite;
+    }
+
+    .carrossel-wrap:hover .features-grid { animation-play-state: paused; }
 
     .feature-card {
       background: var(--cinza);
       border-radius: 16px;
-      padding: 28px;
+      overflow: hidden;
       border: 1px solid var(--borda);
       transition: transform 0.2s, box-shadow 0.2s;
+      width: 280px;
+      flex-shrink: 0;
     }
 
     .feature-card:hover {
@@ -233,17 +381,59 @@
       box-shadow: 0 12px 32px rgba(0,0,0,0.08);
     }
 
-    .feature-icon {
-      width: 48px;
-      height: 48px;
-      background: var(--verde-fundo);
+    .feature-card-body { padding: 20px 24px 24px; }
+
+    .feature-shot {
+      display: block;
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      object-position: top;
+      border-bottom: 1px solid var(--borda);
+      cursor: zoom-in;
+    }
+
+    /* LIGHTBOX */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 5%;
+      cursor: zoom-out;
+    }
+
+    .lightbox.aberto { display: flex; }
+
+    .lightbox img {
+      max-width: 100%;
+      max-height: 90vh;
       border-radius: 12px;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+      cursor: default;
+    }
+
+    .lightbox-fechar {
+      position: absolute;
+      top: 24px;
+      right: 5%;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: var(--branco);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.4rem;
-      margin-bottom: 16px;
     }
+
+    .lightbox-fechar:hover { background: rgba(255,255,255,0.25); }
 
     .feature-card h3 {
       font-size: 1rem;
@@ -257,14 +447,30 @@
       line-height: 1.5;
     }
 
+    .feature-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 12px;
+      color: var(--verde);
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .feature-link:hover { color: var(--verde-claro); }
+
     /* SEGMENTOS */
     #segmentos { background: var(--cinza); }
 
     .segmentos-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      display: flex;
       gap: 16px;
+      width: max-content;
+      animation: rolar-esteira 45s linear infinite reverse;
     }
+
+    .carrossel-wrap:hover .segmentos-grid { animation-play-state: paused; }
 
     .segmento-card {
       background: var(--branco);
@@ -274,6 +480,8 @@
       border: 2px solid transparent;
       transition: border-color 0.2s, transform 0.2s;
       cursor: default;
+      width: 180px;
+      flex-shrink: 0;
     }
 
     .segmento-card:hover {
@@ -589,12 +797,21 @@
       padding: 2px 6px;
     }
 
+    @keyframes rolar-esteira {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
     /* RESPONSIVO */
     @media (max-width: 640px) {
       .nav-links { display: none; }
       .numeros { gap: 32px; }
       .step { flex-direction: column; gap: 12px; }
       .lojas-dropdown { min-width: 180px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .features-grid, .segmentos-grid { animation: none; }
     }
   </style>
 </head>
@@ -604,6 +821,7 @@
 <nav>
   <div class="nav-logo">Produção<span>Organizada</span></div>
   <ul class="nav-links">
+    <!-- <li><a href="#screenshots">Como funciona</a></li> -->
     <li><a href="#funcionalidades">Funcionalidades</a></li>
     <li><a href="#segmentos">Segmentos</a></li>
     <!-- <li><a href="#planos">Planos</a></li> -->
@@ -632,67 +850,125 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-badge">App para iOS e Android</div>
-  <h1>Gerencie seu negócio com <em>total controle</em> na palma da mão</h1>
-  <p>PDV com finalização por PIX, Dinheiro e Cartão, loja online, estoque, pedidos, clientes, orçamentos, impressão de recibos e muito mais, tudo em um único app.</p>
-  <div class="hero-cta">
-    <div class="download-wrap">
-      <button type="button" class="btn-primario btn-download-hero" onclick="toggleDownload(this)">Baixar o app ▾</button>
-      <div class="lojas-dropdown">
-        <a href="https://play.google.com/store/apps/details?id=com.producao.organizada.produto&pcampaignid=web_share" target="_blank" rel="noopener" class="loja-link">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3.18 1.27 13.5 12 3.18 22.73A2 2 0 0 1 2 21V3a2 2 0 0 1 1.18-1.73Z" fill="#EA4335"/><path d="m13.5 12 3.18 3.18-10.6 6.12A2 2 0 0 1 4 20.5L13.5 12Z" fill="#FBBC05"/><path d="M20.5 10.27 17.32 12 13.5 12 3 2.5a2 2 0 0 1 2.08-.31l10.6 6.12L20.5 10.27Z" fill="#4285F4"/><path d="m13.5 12 6.94 1.73A2 2 0 0 1 20.5 15L17.32 12 13.5 12Z" fill="#34A853"/></svg>
-          <div><small>Disponível no</small>Google Play</div>
-        </a>
-        <a href="https://apps.apple.com/us/app/produ%C3%A7%C3%A3o-organizada/id6744489148" target="_blank" rel="noopener" class="loja-link">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11Z"/></svg>
-          <div><small>Baixar na</small>App Store</div>
-        </a>
-        <a href="https://apps.microsoft.com/store/detail/9PL2RNRQFTQG?cid=DevShareMCLPCS" target="_blank" rel="noopener" class="loja-link">
-          <svg width="24" height="24" viewBox="0 0 24 24"><path fill="#F35325" d="M2 2h9v9H2z"/><path fill="#81BC06" d="M13 2h9v9h-9z"/><path fill="#05A6F0" d="M2 13h9v9H2z"/><path fill="#FFBA08" d="M13 13h9v9h-9z"/></svg>
-          <div><small>Baixar na</small>Microsoft Store</div>
-        </a>
+  <div class="hero-texto">
+    <!-- <div class="hero-badge">App para iOS, Android e Desktop</div> -->
+    <h1>Gerencie seu negócio com <em>total controle</em> na palma da mão</h1>
+    <p>Caixa, loja online, estoque, pedidos, clientes, orçamentos, impressão de recibos e muito mais, tudo em um único app.</p>
+    <div class="hero-cta">
+      <div class="download-wrap">
+        <button type="button" class="btn-primario btn-download-hero" onclick="toggleDownload(this)">Baixar o app ▾</button>
+        <div class="lojas-dropdown">
+          <a href="https://play.google.com/store/apps/details?id=com.producao.organizada.produto&pcampaignid=web_share" target="_blank" rel="noopener" class="loja-link">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3.18 1.27 13.5 12 3.18 22.73A2 2 0 0 1 2 21V3a2 2 0 0 1 1.18-1.73Z" fill="#EA4335"/><path d="m13.5 12 3.18 3.18-10.6 6.12A2 2 0 0 1 4 20.5L13.5 12Z" fill="#FBBC05"/><path d="M20.5 10.27 17.32 12 13.5 12 3 2.5a2 2 0 0 1 2.08-.31l10.6 6.12L20.5 10.27Z" fill="#4285F4"/><path d="m13.5 12 6.94 1.73A2 2 0 0 1 20.5 15L17.32 12 13.5 12Z" fill="#34A853"/></svg>
+            <div><small>Disponível no</small>Google Play</div>
+          </a>
+          <a href="https://apps.apple.com/us/app/produ%C3%A7%C3%A3o-organizada/id6744489148" target="_blank" rel="noopener" class="loja-link">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11Z"/></svg>
+            <div><small>Baixar na</small>App Store</div>
+          </a>
+          <a href="https://apps.microsoft.com/store/detail/9PL2RNRQFTQG?cid=DevShareMCLPCS" target="_blank" rel="noopener" class="loja-link">
+            <svg width="24" height="24" viewBox="0 0 24 24"><path fill="#F35325" d="M2 2h9v9H2z"/><path fill="#81BC06" d="M13 2h9v9h-9z"/><path fill="#05A6F0" d="M2 13h9v9H2z"/><path fill="#FFBA08" d="M13 13h9v9h-9z"/></svg>
+            <div><small>Baixar na</small>Microsoft Store</div>
+          </a>
+        </div>
+      </div>
+      <!-- <a href="#funcionalidades" class="btn-secundario">Ver funcionalidades</a> -->
+    </div>
+  </div>
+  <div class="hero-mockup">
+    <div>
+      <div class="hero-mockup-stage">
+        <div class="screenshot-frame hero-slide ativo">
+          <div class="screenshot-frame-bar"><span></span><span></span><span></span></div>
+          <img src="img/screenshots/pdv-caixa.jpg" alt="Tela do PDV - Caixa do app Produção Organizada, com produtos, quantidade e total da venda" />
+        </div>
+        <div class="screenshot-frame hero-slide">
+          <div class="screenshot-frame-bar"><span></span><span></span><span></span></div>
+          <img src="img/screenshots/finalizar-venda.jpg" alt="Tela de finalizar venda com opções de pagamento em Dinheiro, Cartão, PIX e Fiado" />
+        </div>
+        <div class="screenshot-frame hero-slide">
+          <div class="screenshot-frame-bar"><span></span><span></span><span></span></div>
+          <img src="img/screenshots/loja-online.jpg" alt="Loja virtual do app com produtos, fotos e preços" />
+        </div>
+        <div class="screenshot-frame hero-slide">
+          <div class="screenshot-frame-bar"><span></span><span></span><span></span></div>
+          <img src="img/screenshots/pedidos-online.jpg" alt="Tela de pedidos online recebidos" />
+        </div>
+        <div class="screenshot-frame hero-slide">
+          <div class="screenshot-frame-bar"><span></span><span></span><span></span></div>
+          <img src="img/screenshots/ranking-produtos.jpg" alt="Relatório de ranking de produtos mais vendidos" />
+        </div>
+        <div class="screenshot-frame hero-slide">
+          <div class="screenshot-frame-bar"><span></span><span></span><span></span></div>
+          <img src="img/screenshots/estoque.jpg" alt="Painel de controle de estoque com entradas, saídas e produtos críticos" />
+        </div>
+        <div class="screenshot-frame hero-slide">
+          <div class="screenshot-frame-bar"><span></span><span></span><span></span></div>
+          <img src="img/screenshots/clientes.jpg" alt="Lista de clientes cadastrados" />
+        </div>
+        <div class="screenshot-frame hero-slide">
+          <div class="screenshot-frame-bar"><span></span><span></span><span></span></div>
+          <img src="img/screenshots/orcamentos.jpg" alt="Tela de novo orçamento com produtos e valor total" />
+        </div>
+        <div class="screenshot-frame hero-slide">
+          <div class="screenshot-frame-bar"><span></span><span></span><span></span></div>
+          <img src="img/screenshots/contas.jpg" alt="Tela de contas a pagar e receber" />
+        </div>
+        <div class="screenshot-frame hero-slide">
+          <div class="screenshot-frame-bar"><span></span><span></span><span></span></div>
+          <img src="img/screenshots/receitas.jpg" alt="Lista de receitas com custo, preço sugerido e lucro" />
+        </div>
+        <div class="screenshot-frame hero-slide">
+          <div class="screenshot-frame-bar"><span></span><span></span><span></span></div>
+          <img src="img/screenshots/fornecedores.jpg" alt="Cadastro de fornecedor" />
+        </div>
+        <div class="screenshot-frame hero-slide">
+          <div class="screenshot-frame-bar"><span></span><span></span><span></span></div>
+          <img src="img/screenshots/impressora.jpg" alt="Configuração de impressoras de cupom e etiqueta" />
+        </div>
+        <div class="screenshot-frame hero-slide">
+          <div class="screenshot-frame-bar"><span></span><span></span><span></span></div>
+          <img src="img/screenshots/codigo-barras.jpg" alt="Tela de gerar código de barras para produtos" />
+        </div>
+        <div class="screenshot-frame hero-slide">
+          <div class="screenshot-frame-bar"><span></span><span></span><span></span></div>
+          <img src="img/screenshots/trocas.jpg" alt="Tela de troca de produto" />
+        </div>
+        <div class="screenshot-frame hero-slide">
+          <div class="screenshot-frame-bar"><span></span><span></span><span></span></div>
+          <img src="img/screenshots/permissoes.jpg" alt="Tela de permissões de acesso por dispositivo" />
+        </div>
+        <div class="screenshot-frame hero-slide">
+          <div class="screenshot-frame-bar"><span></span><span></span><span></span></div>
+          <img src="img/screenshots/lista-produtos.jpg" alt="Lista de produtos cadastrados com fotos e preços" />
+        </div>
+        <div class="screenshot-frame hero-slide">
+          <div class="screenshot-frame-bar"><span></span><span></span><span></span></div>
+          <img src="img/screenshots/menu-principal.jpg" alt="Menu principal do app com todos os módulos" />
+        </div>
+      </div>
+      <div class="hero-dots">
+        <span class="ativo"></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
       </div>
     </div>
-    <!-- <a href="#funcionalidades" class="btn-secundario">Ver funcionalidades</a> -->
   </div>
 </section>
-
-<!-- VÍDEO -->
-<!-- <div class="video-section">
-  <p class="section-label">Veja o app em ação</p>
-  <h2 class="section-titulo">Tudo que você precisa em um só lugar</h2>
-  <p class="section-sub">Assista e veja como é simples organizar e vender mais com o Produção Organizada.</p>
-  <div class="video-wrap">
-    <video controls autoplay muted playsinline loop>
-      <source src="Producao_Organizada_1_Minuto.mp4" type="video/mp4" />
-      <track kind="subtitles" src="legendas.vtt" srclang="pt" label="Português" default />
-    </video>
-  </div>
-</div> -->
-
-<!-- NÚMEROS -->
-<div class="numeros">
-  <!-- <div class="numero-item">
-    <strong>5</strong>
-    <span>Segmentos de negócio</span>
-  </div> -->
-  <div class="numero-item">
-    <strong>15+</strong>
-    <span>Módulos integrados</span>
-  </div>
-  <div class="numero-item">
-    <strong>17</strong>
-    <span>Segmentos de negócio</span>
-  </div>
-  <div class="numero-item">
-    <strong>100%</strong>
-    <span>Feito para o Brasil</span>
-  </div>
-  <div class="numero-item">
-    <strong>1 app</strong>
-    <span>Para tudo que você precisa</span>
-  </div>
-</div>
 
 <!-- FUNCIONALIDADES -->
 <section id="funcionalidades">
@@ -700,82 +976,209 @@
   <h2 class="section-titulo">Tudo que seu negócio precisa</h2>
   <p class="section-sub">Cada módulo foi pensado para o dia a dia de quem produz, vende e entrega.</p>
 
-  <div class="features-grid">
+  <div class="carrossel-wrap">
+<div class="features-grid">
     <div class="feature-card">
-      <div class="feature-icon">🛒</div>
-      <h3>PDV — Caixa</h3>
-      <p>Realize vendas rapidamente pelo celular. Aceite Dinheiro, PIX, Cartão (crédito/débito) e Fiado. Calcule troco, aplique desconto e imprima o comprovante na hora.</p>
+      <img class="feature-shot" src="img/screenshots/pdv-caixa.jpg" alt="Tela do PDV - Caixa do app" loading="lazy" onclick="abrirLightbox('img/screenshots/pdv-caixa.jpg')" />
+      <div class="feature-card-body">
+        <h3>PDV — Caixa</h3>
+        <p>Realize vendas rapidamente pelo celular. Aceite Dinheiro, PIX, Cartão (crédito/débito) e Fiado. Calcule troco, aplique desconto e imprima o comprovante na hora.</p>
+      </div>
     </div>
     <div class="feature-card">
-      <div class="feature-icon">📋</div>
-      <h3>Pedidos Online</h3>
-      <p>Receba e gerencie pedidos dos seus clientes com acompanhamento de status em tempo real.</p>
+      <img class="feature-shot" src="img/screenshots/pedidos-online.jpg" alt="Tela de pedidos online recebidos" loading="lazy" onclick="abrirLightbox('img/screenshots/pedidos-online.jpg')" />
+      <div class="feature-card-body">
+        <h3>Pedidos Online</h3>
+        <p>Receba e gerencie pedidos dos seus clientes com acompanhamento de status em tempo real.</p>
+      </div>
     </div>
     <div class="feature-card">
-      <div class="feature-icon">🛍️</div>
-      <h3>Loja Virtual</h3>
-      <p>Monte sua loja online e deixe seus clientes comprarem a qualquer hora, direto pelo link da sua loja.</p>
+      <img class="feature-shot" src="img/screenshots/loja-online.jpg" alt="Loja virtual do app com produtos, fotos e preços" loading="lazy" onclick="abrirLightbox('img/screenshots/loja-online.jpg')" />
+      <div class="feature-card-body">
+        <h3>Loja Virtual</h3>
+        <p>Monte sua loja online e deixe seus clientes comprarem a qualquer hora, direto pelo link da sua loja.</p>
+        <a href="https://demonstracao-site.sitedc.online/" target="_blank" rel="noopener" class="feature-link">Ver loja de exemplo →</a>
+      </div>
     </div>
     <div class="feature-card">
-      <div class="feature-icon">📦</div>
-      <h3>Controle de Estoque</h3>
-      <p>Registre entradas e saídas, monitore saldo em tempo real e nunca mais fique sem produto na hora errada.</p>
+      <img class="feature-shot" src="img/screenshots/estoque.jpg" alt="Painel de estoque com total de produtos, entradas, saídas e produtos com estoque crítico" loading="lazy" onclick="abrirLightbox('img/screenshots/estoque.jpg')" />
+      <div class="feature-card-body">
+        <h3>Controle de Estoque</h3>
+        <p>Registre entradas e saídas, monitore saldo em tempo real e nunca mais fique sem produto na hora errada.</p>
+      </div>
     </div>
     <div class="feature-card">
-      <div class="feature-icon">📊</div>
-      <h3>Relatórios</h3>
-      <p>Acompanhe vendas, receitas e movimentações com relatórios claros para tomar decisões com base em dados.</p>
+      <img class="feature-shot" src="img/screenshots/ranking-produtos.jpg" alt="Relatório de ranking de produtos mais vendidos" loading="lazy" onclick="abrirLightbox('img/screenshots/ranking-produtos.jpg')" />
+      <div class="feature-card-body">
+        <h3>Relatórios</h3>
+        <p>Acompanhe vendas, receitas e movimentações com relatórios claros para tomar decisões com base em dados.</p>
+      </div>
     </div>
     <div class="feature-card">
-      <div class="feature-icon">👥</div>
-      <h3>Clientes</h3>
-      <p>Cadastre seus clientes, veja o histórico de compras e mantenha um relacionamento próximo com cada um.</p>
+      <img class="feature-shot" src="img/screenshots/clientes.jpg" alt="Lista de clientes cadastrados com nome e telefone" loading="lazy" onclick="abrirLightbox('img/screenshots/clientes.jpg')" />
+      <div class="feature-card-body">
+        <h3>Clientes</h3>
+        <p>Cadastre seus clientes, veja o histórico de compras e mantenha um relacionamento próximo com cada um.</p>
+      </div>
     </div>
     <div class="feature-card">
-      <div class="feature-icon">📝</div>
-      <h3>Orçamentos</h3>
-      <p>Crie orçamentos profissionais rapidamente e envie para aprovação do cliente com poucos toques.</p>
+      <img class="feature-shot" src="img/screenshots/orcamentos.jpg" alt="Tela de novo orçamento com produtos e valor total" loading="lazy" onclick="abrirLightbox('img/screenshots/orcamentos.jpg')" />
+      <div class="feature-card-body">
+        <h3>Orçamentos</h3>
+        <p>Crie orçamentos profissionais rapidamente e envie para aprovação do cliente com poucos toques.</p>
+      </div>
     </div>
     <div class="feature-card">
-      <div class="feature-icon">💰</div>
-      <h3>Contas a Pagar e Receber</h3>
-      <p>Controle o fluxo financeiro do seu negócio, com alertas de vencimento e visão clara do que entra e sai.</p>
+      <img class="feature-shot" src="img/screenshots/contas.jpg" alt="Tela de contas a pagar e receber com status pendente e valores" loading="lazy" onclick="abrirLightbox('img/screenshots/contas.jpg')" />
+      <div class="feature-card-body">
+        <h3>Contas a Pagar e Receber</h3>
+        <p>Controle o fluxo financeiro do seu negócio, com alertas de vencimento e visão clara do que entra e sai.</p>
+      </div>
     </div>
     <div class="feature-card">
-      <div class="feature-icon">🏭</div>
-      <h3>Produção e Receitas</h3>
-      <p>Para quem produz alimentos: cadastre receitas, calcule custos e registre o histórico de cada produção.</p>
+      <img class="feature-shot" src="img/screenshots/receitas.jpg" alt="Lista de receitas com custo, preço sugerido e lucro" loading="lazy" onclick="abrirLightbox('img/screenshots/receitas.jpg')" />
+      <div class="feature-card-body">
+        <h3>Produção e Receitas</h3>
+        <p>Para quem produz alimentos: cadastre receitas, calcule custos e registre o histórico de cada produção.</p>
+      </div>
     </div>
     <div class="feature-card">
-      <div class="feature-icon">🏪</div>
-      <h3>Fornecedores</h3>
-      <p>Gerencie seus fornecedores, compare cotações e mantenha tudo organizado para suas compras.</p>
+      <img class="feature-shot" src="img/screenshots/fornecedores.jpg" alt="Cadastro de fornecedor com contato, telefone, e-mail e CNPJ" loading="lazy" onclick="abrirLightbox('img/screenshots/fornecedores.jpg')" />
+      <div class="feature-card-body">
+        <h3>Fornecedores</h3>
+        <p>Gerencie seus fornecedores, compare cotações e mantenha tudo organizado para suas compras.</p>
+      </div>
     </div>
     <div class="feature-card">
-      <div class="feature-icon">🖨️</div>
-      <h3>Impressão de Recibos e Etiquetas</h3>
-      <p>Imprima recibos e etiquetas de produtos via Bluetooth ou USB direto do celular, sem complicação.</p>
+      <img class="feature-shot" src="img/screenshots/impressora.jpg" alt="Configuração de impressoras de cupom e etiqueta" loading="lazy" onclick="abrirLightbox('img/screenshots/impressora.jpg')" />
+      <div class="feature-card-body">
+        <h3>Impressão de Recibos e Etiquetas</h3>
+        <p>Imprima recibos e etiquetas de produtos via Bluetooth ou USB direto do celular, sem complicação.</p>
+      </div>
     </div>
     <div class="feature-card">
-      <div class="feature-icon">📷</div>
-      <h3>Leitor de Código de Barras</h3>
-      <p>Leia e gere códigos de barras para seus produtos. Agilize o PDV e o controle de estoque com a câmera do celular.</p>
+      <img class="feature-shot" src="img/screenshots/codigo-barras.jpg" alt="Tela de gerar código de barras para produtos" loading="lazy" onclick="abrirLightbox('img/screenshots/codigo-barras.jpg')" />
+      <div class="feature-card-body">
+        <h3>Leitor de Código de Barras</h3>
+        <p>Leia e gere códigos de barras para seus produtos. Agilize o PDV e o controle de estoque com a câmera do celular.</p>
+      </div>
     </div>
     <div class="feature-card">
-      <div class="feature-icon">🔁</div>
-      <h3>Trocas e Devoluções</h3>
-      <p>Registre trocas e devoluções de forma simples, mantendo o histórico e o estoque sempre corretos.</p>
+      <img class="feature-shot" src="img/screenshots/trocas.jpg" alt="Tela de troca de produto com itens da venda original" loading="lazy" onclick="abrirLightbox('img/screenshots/trocas.jpg')" />
+      <div class="feature-card-body">
+        <h3>Trocas e Devoluções</h3>
+        <p>Registre trocas e devoluções de forma simples, mantendo o histórico e o estoque sempre corretos.</p>
+      </div>
     </div>
     <div class="feature-card">
-      <div class="feature-icon">🔐</div>
-      <h3>Controle de Acesso da Equipe</h3>
-      <p>Defina quais telas e funções cada colaborador pode acessar, protegendo informações sensíveis do negócio.</p>
+      <img class="feature-shot" src="img/screenshots/permissoes.jpg" alt="Tela de permissões de acesso por dispositivo" loading="lazy" onclick="abrirLightbox('img/screenshots/permissoes.jpg')" />
+      <div class="feature-card-body">
+        <h3>Controle de Acesso da Equipe</h3>
+        <p>Defina quais telas e funções cada colaborador pode acessar, protegendo informações sensíveis do negócio.</p>
+      </div>
     </div>
-    <!-- <div class="feature-card">
-      <div class="feature-icon">💬</div>
-      <h3>Suporte dentro do App</h3>
-      <p>Fale com o suporte diretamente pelo app, sem precisar sair ou abrir outro canal de atendimento.</p>
-    </div> -->
+    
+    <div class="feature-card">
+      <img class="feature-shot" src="img/screenshots/pdv-caixa.jpg" alt="Tela do PDV - Caixa do app" loading="lazy" onclick="abrirLightbox('img/screenshots/pdv-caixa.jpg')" />
+      <div class="feature-card-body">
+        <h3>PDV — Caixa</h3>
+        <p>Realize vendas rapidamente pelo celular. Aceite Dinheiro, PIX, Cartão (crédito/débito) e Fiado. Calcule troco, aplique desconto e imprima o comprovante na hora.</p>
+      </div>
+    </div>
+    <div class="feature-card">
+      <img class="feature-shot" src="img/screenshots/pedidos-online.jpg" alt="Tela de pedidos online recebidos" loading="lazy" onclick="abrirLightbox('img/screenshots/pedidos-online.jpg')" />
+      <div class="feature-card-body">
+        <h3>Pedidos Online</h3>
+        <p>Receba e gerencie pedidos dos seus clientes com acompanhamento de status em tempo real.</p>
+      </div>
+    </div>
+    <div class="feature-card">
+      <img class="feature-shot" src="img/screenshots/loja-online.jpg" alt="Loja virtual do app com produtos, fotos e preços" loading="lazy" onclick="abrirLightbox('img/screenshots/loja-online.jpg')" />
+      <div class="feature-card-body">
+        <h3>Loja Virtual</h3>
+        <p>Monte sua loja online e deixe seus clientes comprarem a qualquer hora, direto pelo link da sua loja.</p>
+        <a href="https://demonstracao-site.sitedc.online/" target="_blank" rel="noopener" class="feature-link">Ver loja de exemplo →</a>
+      </div>
+    </div>
+    <div class="feature-card">
+      <img class="feature-shot" src="img/screenshots/estoque.jpg" alt="Painel de estoque com total de produtos, entradas, saídas e produtos com estoque crítico" loading="lazy" onclick="abrirLightbox('img/screenshots/estoque.jpg')" />
+      <div class="feature-card-body">
+        <h3>Controle de Estoque</h3>
+        <p>Registre entradas e saídas, monitore saldo em tempo real e nunca mais fique sem produto na hora errada.</p>
+      </div>
+    </div>
+    <div class="feature-card">
+      <img class="feature-shot" src="img/screenshots/ranking-produtos.jpg" alt="Relatório de ranking de produtos mais vendidos" loading="lazy" onclick="abrirLightbox('img/screenshots/ranking-produtos.jpg')" />
+      <div class="feature-card-body">
+        <h3>Relatórios</h3>
+        <p>Acompanhe vendas, receitas e movimentações com relatórios claros para tomar decisões com base em dados.</p>
+      </div>
+    </div>
+    <div class="feature-card">
+      <img class="feature-shot" src="img/screenshots/clientes.jpg" alt="Lista de clientes cadastrados com nome e telefone" loading="lazy" onclick="abrirLightbox('img/screenshots/clientes.jpg')" />
+      <div class="feature-card-body">
+        <h3>Clientes</h3>
+        <p>Cadastre seus clientes, veja o histórico de compras e mantenha um relacionamento próximo com cada um.</p>
+      </div>
+    </div>
+    <div class="feature-card">
+      <img class="feature-shot" src="img/screenshots/orcamentos.jpg" alt="Tela de novo orçamento com produtos e valor total" loading="lazy" onclick="abrirLightbox('img/screenshots/orcamentos.jpg')" />
+      <div class="feature-card-body">
+        <h3>Orçamentos</h3>
+        <p>Crie orçamentos profissionais rapidamente e envie para aprovação do cliente com poucos toques.</p>
+      </div>
+    </div>
+    <div class="feature-card">
+      <img class="feature-shot" src="img/screenshots/contas.jpg" alt="Tela de contas a pagar e receber com status pendente e valores" loading="lazy" onclick="abrirLightbox('img/screenshots/contas.jpg')" />
+      <div class="feature-card-body">
+        <h3>Contas a Pagar e Receber</h3>
+        <p>Controle o fluxo financeiro do seu negócio, com alertas de vencimento e visão clara do que entra e sai.</p>
+      </div>
+    </div>
+    <div class="feature-card">
+      <img class="feature-shot" src="img/screenshots/receitas.jpg" alt="Lista de receitas com custo, preço sugerido e lucro" loading="lazy" onclick="abrirLightbox('img/screenshots/receitas.jpg')" />
+      <div class="feature-card-body">
+        <h3>Produção e Receitas</h3>
+        <p>Para quem produz alimentos: cadastre receitas, calcule custos e registre o histórico de cada produção.</p>
+      </div>
+    </div>
+    <div class="feature-card">
+      <img class="feature-shot" src="img/screenshots/fornecedores.jpg" alt="Cadastro de fornecedor com contato, telefone, e-mail e CNPJ" loading="lazy" onclick="abrirLightbox('img/screenshots/fornecedores.jpg')" />
+      <div class="feature-card-body">
+        <h3>Fornecedores</h3>
+        <p>Gerencie seus fornecedores, compare cotações e mantenha tudo organizado para suas compras.</p>
+      </div>
+    </div>
+    <div class="feature-card">
+      <img class="feature-shot" src="img/screenshots/impressora.jpg" alt="Configuração de impressoras de cupom e etiqueta" loading="lazy" onclick="abrirLightbox('img/screenshots/impressora.jpg')" />
+      <div class="feature-card-body">
+        <h3>Impressão de Recibos e Etiquetas</h3>
+        <p>Imprima recibos e etiquetas de produtos via Bluetooth ou USB direto do celular, sem complicação.</p>
+      </div>
+    </div>
+    <div class="feature-card">
+      <img class="feature-shot" src="img/screenshots/codigo-barras.jpg" alt="Tela de gerar código de barras para produtos" loading="lazy" onclick="abrirLightbox('img/screenshots/codigo-barras.jpg')" />
+      <div class="feature-card-body">
+        <h3>Leitor de Código de Barras</h3>
+        <p>Leia e gere códigos de barras para seus produtos. Agilize o PDV e o controle de estoque com a câmera do celular.</p>
+      </div>
+    </div>
+    <div class="feature-card">
+      <img class="feature-shot" src="img/screenshots/trocas.jpg" alt="Tela de troca de produto com itens da venda original" loading="lazy" onclick="abrirLightbox('img/screenshots/trocas.jpg')" />
+      <div class="feature-card-body">
+        <h3>Trocas e Devoluções</h3>
+        <p>Registre trocas e devoluções de forma simples, mantendo o histórico e o estoque sempre corretos.</p>
+      </div>
+    </div>
+    <div class="feature-card">
+      <img class="feature-shot" src="img/screenshots/permissoes.jpg" alt="Tela de permissões de acesso por dispositivo" loading="lazy" onclick="abrirLightbox('img/screenshots/permissoes.jpg')" />
+      <div class="feature-card-body">
+        <h3>Controle de Acesso da Equipe</h3>
+        <p>Defina quais telas e funções cada colaborador pode acessar, protegendo informações sensíveis do negócio.</p>
+      </div>
+    </div>
+    
+  </div>
   </div>
 </section>
 
@@ -785,7 +1188,76 @@
   <h2 class="section-titulo">Funciona para o seu segmento</h2>
   <p class="section-sub">O app se adapta ao tipo do seu negócio, mostrando só o que você realmente usa.</p>
 
-  <div class="segmentos-grid">
+  <div class="carrossel-wrap">
+<div class="segmentos-grid">
+    <div class="segmento-card">
+      <div class="segmento-emoji">🍷</div>
+      <h3>Adega</h3>
+    </div>
+    <div class="segmento-card">
+      <div class="segmento-emoji">🍕</div>
+      <h3>Produção de Alimentos</h3>
+    </div>
+    <div class="segmento-card">
+      <div class="segmento-emoji">👕</div>
+      <h3>Vestuário</h3>
+    </div>
+    <div class="segmento-card">
+      <div class="segmento-emoji">⚙️</div>
+      <h3>Peças</h3>
+    </div>
+    <div class="segmento-card">
+      <div class="segmento-emoji">🎨</div>
+      <h3>Artesanato</h3>
+    </div>
+    <div class="segmento-card">
+      <div class="segmento-emoji">💄</div>
+      <h3>Cosméticos e Beleza</h3>
+    </div>
+    <div class="segmento-card">
+      <div class="segmento-emoji">📱</div>
+      <h3>Eletrônicos</h3>
+    </div>
+    <div class="segmento-card">
+      <div class="segmento-emoji">✏️</div>
+      <h3>Papelaria</h3>
+    </div>
+    <div class="segmento-card">
+      <div class="segmento-emoji">🛒</div>
+      <h3>Bazar e Utilidades</h3>
+    </div>
+    <div class="segmento-card">
+      <div class="segmento-emoji">🪑</div>
+      <h3>Decoração</h3>
+    </div>
+    <div class="segmento-card">
+      <div class="segmento-emoji">🐾</div>
+      <h3>Pet Shop</h3>
+    </div>
+    <div class="segmento-card">
+      <div class="segmento-emoji">⌚</div>
+      <h3>Acessórios</h3>
+    </div>
+    <div class="segmento-card">
+      <div class="segmento-emoji">👟</div>
+      <h3>Calçados</h3>
+    </div>
+    <div class="segmento-card">
+      <div class="segmento-emoji">💎</div>
+      <h3>Joias e Bijuterias</h3>
+    </div>
+    <div class="segmento-card">
+      <div class="segmento-emoji">🧸</div>
+      <h3>Brinquedos</h3>
+    </div>
+    <div class="segmento-card">
+      <div class="segmento-emoji">🏥</div>
+      <h3>Saúde e Bem-estar</h3>
+    </div>
+    <div class="segmento-card">
+      <div class="segmento-emoji">🏷️</div>
+      <h3>Outros Negócios</h3>
+    </div>
     <div class="segmento-card">
       <div class="segmento-emoji">🍷</div>
       <h3>Adega</h3>
@@ -855,6 +1327,7 @@
       <h3>Outros Negócios</h3>
     </div>
   </div>
+  </div>
 </section>
 
 <!-- COMO FUNCIONA -->
@@ -894,80 +1367,6 @@
     </div>
   </div>
 </section>
-
-<!-- PLANOS -->
-<!-- <section id="planos">
-  <p class="section-label">Planos</p>
-  <h2 class="section-titulo">Comece grátis, cresça no seu ritmo</h2>
-  <p class="section-sub">Escolha o plano ideal para o seu momento.</p>
-
-  <div class="planos-grid">
-    <div class="plano-card destaque">
-      <div class="plano-badge">Mais popular</div>
-      <div class="plano-nome">Assinatura Mensal</div>
-      <div class="plano-ancora">Menos que um café por dia</div>
-      <ul class="plano-itens">
-        <li>Tudo do plano gratuito</li>
-        <li>PDV — Caixa (PIX, Cartão, Fiado)</li>
-        <li>Pedidos online</li>
-        <li>Loja virtual</li>
-        <li>Clientes</li>
-        <li>Orçamentos</li>
-        <li>Contas a pagar e receber</li>
-        <li>Relatórios</li>
-        <li>Trocas e devoluções</li>
-      </ul>
-      <div class="plano-footer">
-        <div class="download-wrap download-wrap-full">
-          <button type="button" class="btn-plano outline btn-download-plano" onclick="toggleDownload(this)">Baixar grátis ▾</button>
-          <div class="lojas-dropdown">
-            <a href="https://play.google.com/store/apps/details?id=com.producao.organizada.produto" target="_blank" rel="noopener" class="loja-link">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3.18 1.27 13.5 12 3.18 22.73A2 2 0 0 1 2 21V3a2 2 0 0 1 1.18-1.73Z" fill="#EA4335"/><path d="m13.5 12 3.18 3.18-10.6 6.12A2 2 0 0 1 4 20.5L13.5 12Z" fill="#FBBC05"/><path d="M20.5 10.27 17.32 12 13.5 12 3 2.5a2 2 0 0 1 2.08-.31l10.6 6.12L20.5 10.27Z" fill="#4285F4"/><path d="m13.5 12 6.94 1.73A2 2 0 0 1 20.5 15L17.32 12 13.5 12Z" fill="#34A853"/></svg>
-              <div><small>Disponível no</small>Google Play</div>
-            </a>
-            <a href="https://apps.apple.com/us/app/produção-organizada/id6744489148" target="_blank" rel="noopener" class="loja-link">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11Z"/></svg>
-              <div><small>Baixar na</small>App Store</div>
-            </a>
-            <a href="https://apps.microsoft.com/store/detail/9PL2RNRQFTQG?cid=DevShareMCLPCS" target="_blank" rel="noopener" class="loja-link">
-              <svg width="24" height="24" viewBox="0 0 24 24"><path fill="#F35325" d="M2 2h9v9H2z"/><path fill="#81BC06" d="M13 2h9v9h-9z"/><path fill="#05A6F0" d="M2 13h9v9H2z"/><path fill="#FFBA08" d="M13 13h9v9h-9z"/></svg>
-              <div><small>Baixar na</small>Microsoft Store</div>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="plano-card">
-      <div class="plano-nome">Gratuito</div>
-      <ul class="plano-itens">
-        <li>Cadastro de produtos</li>
-        <li>Controle de estoque</li>
-        <li>Fornecedores e cotações</li>
-        <li>Receitas e histórico de produção</li>
-      </ul>
-      <div class="plano-footer">
-        <div class="download-wrap download-wrap-full">
-          <button type="button" class="btn-plano outline btn-download-plano" onclick="toggleDownload(this)">Baixar grátis ▾</button>
-          <div class="lojas-dropdown">
-            <a href="https://play.google.com/store/apps/details?id=com.producao.organizada.produto" target="_blank" rel="noopener" class="loja-link">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3.18 1.27 13.5 12 3.18 22.73A2 2 0 0 1 2 21V3a2 2 0 0 1 1.18-1.73Z" fill="#EA4335"/><path d="m13.5 12 3.18 3.18-10.6 6.12A2 2 0 0 1 4 20.5L13.5 12Z" fill="#FBBC05"/><path d="M20.5 10.27 17.32 12 13.5 12 3 2.5a2 2 0 0 1 2.08-.31l10.6 6.12L20.5 10.27Z" fill="#4285F4"/><path d="m13.5 12 6.94 1.73A2 2 0 0 1 20.5 15L17.32 12 13.5 12Z" fill="#34A853"/></svg>
-              <div><small>Disponível no</small>Google Play</div>
-            </a>
-            <a href="https://apps.apple.com/us/app/produção-organizada/id6744489148" target="_blank" rel="noopener" class="loja-link">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11Z"/></svg>
-              <div><small>Baixar na</small>App Store</div>
-            </a>
-            <a href="https://apps.microsoft.com/store/detail/9PL2RNRQFTQG?cid=DevShareMCLPCS" target="_blank" rel="noopener" class="loja-link">
-              <svg width="24" height="24" viewBox="0 0 24 24"><path fill="#F35325" d="M2 2h9v9H2z"/><path fill="#81BC06" d="M13 2h9v9h-9z"/><path fill="#05A6F0" d="M2 13h9v9H2z"/><path fill="#FFBA08" d="M13 13h9v9h-9z"/></svg>
-              <div><small>Baixar na</small>Microsoft Store</div>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section> -->
 
 <!-- FAQ -->
 <section id="faq">
@@ -1043,15 +1442,31 @@
 
 <!-- FOOTER -->
 <footer>
-  <p><strong>Produção Organizada</strong> &nbsp;·&nbsp; Desenvolvido no Brasil para pequenos e médios negócios</p>
-  <p class="footer-links">
-    <a href="https://sitedc.online/politicaPrivacidade/privacy-producao.html">Política de Privacidade</a>
-    &nbsp;·&nbsp;
-    <a href="https://sitedc.online/politicaPrivacidade/termosproducaoorganizada.html">Termos de Uso</a>
-  </p>
+  <p><strong>Produção Organizada</strong> &nbsp;·&nbsp; Desenvolvido para pequenas e médias empresas</p>
 </footer>
 
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="fecharLightbox()">
+  <button type="button" class="lightbox-fechar" onclick="fecharLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="Screenshot ampliado do app" onclick="event.stopPropagation()" />
+</div>
+
 <script>
+  function abrirLightbox(src) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('aberto');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function fecharLightbox() {
+    document.getElementById('lightbox').classList.remove('aberto');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') fecharLightbox();
+  });
+
   function toggleDownload(btn) {
     const dropdown = btn.nextElementSibling;
     const aberto = dropdown.classList.contains('aberto');
@@ -1076,6 +1491,40 @@
       btn.classList.add('aberto');
     }
   }
+
+  (function heroSlider() {
+    const slides = document.querySelectorAll('.hero-slide');
+    const dots = document.querySelectorAll('.hero-dots span');
+    if (!slides.length) return;
+    let atual = 0;
+    let timer;
+
+    function irPara(i) {
+      slides[atual].classList.remove('ativo');
+      dots[atual].classList.remove('ativo');
+      atual = i;
+      slides[atual].classList.add('ativo');
+      dots[atual].classList.add('ativo');
+    }
+
+    function proximo() {
+      irPara((atual + 1) % slides.length);
+    }
+
+    function reiniciarTimer() {
+      clearInterval(timer);
+      timer = setInterval(proximo, 4000);
+    }
+
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => {
+        irPara(i);
+        reiniciarTimer();
+      });
+    });
+
+    reiniciarTimer();
+  })();
 </script>
 
 </body>
